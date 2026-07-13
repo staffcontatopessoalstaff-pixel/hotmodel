@@ -16,6 +16,7 @@ export interface Model {
   returnDays: number;
   views: number;
   earnings: number;
+  gallery?: string[];
 }
 
 export interface Lead {
@@ -55,8 +56,12 @@ export const initializeStorage = () => {
   if (storedModels) {
     try {
       const parsed = JSON.parse(storedModels);
-      if (Array.isArray(parsed) && parsed.length < 10) {
-        resetModels = true; // migração do catálogo de testes antigo
+      if (Array.isArray(parsed)) {
+        if (parsed.length < 10 || parsed.some(m => !m.gallery)) {
+          resetModels = true; // migração do catálogo antigo ou sem galeria
+        }
+      } else {
+        resetModels = true;
       }
     } catch (e) {
       resetModels = true;

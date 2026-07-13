@@ -1883,6 +1883,65 @@ function App() {
                   <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>R$ {getMainPrice().toFixed(2)}</span>
                 </div>
 
+                {/* Preview Gallery Section */}
+                {modelToUnlock.gallery && modelToUnlock.gallery.length > 0 && (
+                  <div style={{ marginBottom: '25px' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f472b6', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>
+                      🔥 PRÉVIA DO ACERVO EXCLUSIVO DE {modelToUnlock.name.toUpperCase()} ({modelToUnlock.gallery.length} FOTOS/VÍDEOS)
+                    </span>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                      {modelToUnlock.gallery.slice(0, 4).map((img, idx) => {
+                        const isLocked = idx >= 1; // Show first image clear, others locked/blurred
+                        return (
+                          <div 
+                            key={idx} 
+                            style={{ 
+                              position: 'relative', 
+                              aspectRatio: '1/1', 
+                              borderRadius: '8px', 
+                              overflow: 'hidden',
+                              border: '1px solid rgba(255,255,255,0.05)',
+                              background: '#1e293b'
+                            }}
+                          >
+                            <img 
+                              src={img} 
+                              alt={`Amostra ${idx + 1}`} 
+                              style={{ 
+                                width: '100%', 
+                                height: '100%', 
+                                objectFit: 'cover',
+                                filter: isLocked ? 'blur(6px) brightness(0.6)' : 'none',
+                                transition: 'filter 0.3s ease'
+                              }} 
+                            />
+                            {isLocked && (
+                              <div style={{ 
+                                position: 'absolute', 
+                                top: 0, 
+                                left: 0, 
+                                width: '100%', 
+                                height: '100%', 
+                                display: 'flex', 
+                                flexDirection: 'column',
+                                justifyContent: 'center', 
+                                alignItems: 'center', 
+                                background: 'rgba(0,0,0,0.4)',
+                                padding: '4px'
+                              }}>
+                                <Lock size={16} color="#f472b6" style={{ marginBottom: '2px' }} />
+                                <span style={{ fontSize: '0.55rem', fontWeight: 600, color: '#fbcfe8', textAlign: 'center', textTransform: 'uppercase', lineHeight: 1.1 }}>
+                                  Bloqueado
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 {/* UPSELL 1: SECOND MODEL 50% OFF */}
                 {models.filter(m => m.isAvailable && m.id !== modelToUnlock.id).length > 0 && (
                   <div className="glass-card" style={{ padding: '18px', marginBottom: '15px', border: '1px dashed rgba(236, 72, 153, 0.4)', background: 'rgba(236, 72, 153, 0.02)' }}>
