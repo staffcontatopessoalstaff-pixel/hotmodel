@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const DICE_URL = 'https://dev.use-dice.com';
 const CLIENT_ID = process.env.DICE_CLIENT_ID || 'dice_live_498b702b2fdf289abb71546775e709e1';
@@ -18,7 +18,7 @@ async function getDiceToken() {
   return _token;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   // CORS configuration
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
