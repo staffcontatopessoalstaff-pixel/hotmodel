@@ -388,6 +388,171 @@ function App() {
     }
   };
 
+  const downloadPDFManual = (purchasedModelsList: Model[]) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Por favor, ative os pop-ups para fazer o download do manual.');
+      return;
+    }
+
+    const modelLinksHtml = purchasedModelsList.map(m => `
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; margin-bottom: 10px;">
+        <strong>Modelo: ${m.name}</strong><br>
+        <span style="font-size: 13px; color: #334155;">Links de Mídia:</span>
+        ${m.delivery_links && m.delivery_links.length > 0 
+          ? m.delivery_links.map((link, i) => `<a href="${link}" target="_blank" style="color: #ec4899; text-decoration: none; font-weight: bold; word-break: break-all; display: block; margin-top: 4px;">Pasta ${i + 1}: ${link}</a>`).join('')
+          : '<span style="color: #ef4444; font-weight: bold;">Pasta pendente de sincronização.</span>'}
+      </div>
+    `).join('');
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Virtual_Creator_Archive_Manual_${Date.now()}</title>
+          <style>
+            body {
+              font-family: 'Helvetica Neue', Arial, sans-serif;
+              color: #1e293b;
+              background-color: #ffffff;
+              margin: 0;
+              padding: 40px;
+              line-height: 1.6;
+            }
+            .header {
+              text-align: center;
+              border-bottom: 3px double #ec4899;
+              padding-bottom: 20px;
+              margin-bottom: 30px;
+            }
+            .brand {
+              font-size: 24px;
+              font-weight: 900;
+              letter-spacing: 2px;
+              color: #ec4899;
+              text-transform: uppercase;
+            }
+            .confidential {
+              color: #ef4444;
+              font-size: 11px;
+              font-weight: bold;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+              margin-top: 5px;
+            }
+            h1 {
+              font-size: 22px;
+              font-weight: 800;
+              margin: 15px 0 5px 0;
+              color: #0f172a;
+            }
+            h2 {
+              font-size: 14px;
+              font-weight: 700;
+              margin-top: 25px;
+              color: #ec4899;
+              border-bottom: 1px solid #e2e8f0;
+              padding-bottom: 5px;
+              text-transform: uppercase;
+            }
+            p, li {
+              font-size: 13px;
+              color: #334155;
+            }
+            ul {
+              padding-left: 20px;
+            }
+            .coupon-box {
+              border: 2px dashed #ec4899;
+              background: #fff5f7;
+              padding: 15px;
+              text-align: center;
+              border-radius: 8px;
+              margin-top: 20px;
+            }
+            .coupon-code {
+              font-size: 20px;
+              font-weight: 900;
+              color: #ec4899;
+              letter-spacing: 2px;
+            }
+            .footer {
+              margin-top: 50px;
+              text-align: center;
+              font-size: 10px;
+              color: #94a3b8;
+              border-top: 1px solid #e2e8f0;
+              padding-top: 15px;
+            }
+            @media print {
+              .no-print { display: none; }
+              body { padding: 20px; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="no-print" style="margin-bottom: 20px; text-align: right;">
+            <button onclick="window.print()" style="background: #ec4899; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer;">
+              🖨️ Salvar como PDF / Imprimir Manual
+            </button>
+          </div>
+
+          <div class="header">
+            <div class="brand">Virtual Creator Archive™</div>
+            <div class="confidential">Documento Altamente Confidencial • Direitos Autorais Reservados</div>
+          </div>
+
+          <h1>MANUAL DE MONETIZAÇÃO & IMPLANTAÇÃO RÁPIDA</h1>
+          <p>Este documento contém as chaves de acesso para as mídias adquiridas e as diretrizes estratégicas para operação e escala do seu funil de vendas. Siga as orientações abaixo para maximizar seu faturamento.</p>
+
+          <h2>1. SEUS LINKS DE ACESSO (MÍDIAS ADQUIRIDAS)</h2>
+          <div style="margin-top: 15px;">
+            ${modelLinksHtml}
+          </div>
+
+          <h2>2. EXPANSÃO DE CONTEÚDO COM INTELIGÊNCIA ARTIFICIAL</h2>
+          <p>Você possui o acervo original da modelo, o que lhe dá uma vantagem gigantesca. Use as mídias inclusas para treinar ou servir de base para criação de novos conteúdos ilimitados:</p>
+          <ul>
+            <li><strong>FaceSwap & Modelos de Rosto:</strong> Use ferramentas como <strong>Fooocus</strong> ou plugins de IA no <strong>Midjourney</strong> para transferir o rosto da modelo para novas fotos (em biquíni, lingeries ou ambientes luxuosos).</li>
+            <li><strong>Criação de Poses no Grok / ChatGPT (DALL-E 3):</strong> Use as fotos da modelo e descreva novas poses e interações para criar materiais adicionais de engajamento diário.</li>
+            <li><strong>Consistência:</strong> Sempre mantenha a iluminação e as cores parecidas com as fotos originais para preservar a naturalidade do perfil.</li>
+          </ul>
+
+          <h2>3. ESTRATÉGIA DO FUNIL PRIVACY FAKE (O SEGREDO DE CONVERSÃO)</h2>
+          <p>O <strong>Painel Privacy Fake</strong> que você tem acesso no sistema foi feito para simular a plataforma oficial de conteúdo. Os fãs acreditam que estão assinando o perfil oficial da modelo, criando confiança e gerando checkout automático.</p>
+          <ul>
+            <li><strong>Como Configurar:</strong> Acesse a aba <strong>Privacy</strong> no seu painel de controle administrativo, selecione a modelo, defina o preço da assinatura e personalize a biografia.</li>
+            <li><strong>Link da Bio:</strong> Copie o link dinâmico gerado no painel e insira na biografia das contas criadas para a modelo no <strong>Instagram, TikTok, Kwai, Threads e X</strong>.</li>
+            <li><strong>Divulgação:</strong> Publique prévias gratuitas (fotos normais) e use chamadas como <em>"Conteúdo completo sem censura no link da minha bio"</em>. Ao clicarem, os fãs são redirecionados para a simulação do Privacy, convertendo os cliques em vendas instantâneas.</li>
+          </ul>
+
+          <h2>4. MÁXIMA CONVERSÃO COM CUPONS DE DESCONTO</h2>
+          <p>Para recuperar fãs indecisos ou impulsionar as assinaturas nas redes sociais, divulgue cupons de desconto. A compra atual lhe concedeu o seguinte cupom ativo para a modelo:</p>
+          <div class="coupon-box">
+            <span style="font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase;">Cupom de 50% de Desconto Ativado</span><br>
+            <div class="coupon-code">OFF50VIP</div>
+            <p style="margin: 5px 0 0 0; font-size: 11px; color: #64748b;">(Este cupom pode ser inserido na página de vendas para dar 50% de desconto na assinatura mensal da modelo)</p>
+          </div>
+
+          <h2>5. TERMOS DE SEGURANÇA E ACORDO DE USO</h2>
+          <p><strong>Atenção:</strong> O conteúdo de mídia desta modelo é exclusivo e de sua inteira responsabilidade comercial. <strong>Não divulgue as pastas originais do Google Drive ou Mega publicamente.</strong> A divulgação indevida resultará na suspensão das chaves de acesso e perda dos direitos de revenda.</p>
+
+          <div class="footer">
+            <p>Virtual Creator Archive™ © ${new Date().getFullYear()} - Todos os direitos reservados. Tecnologia de pagamentos integrada via Dice API.</p>
+          </div>
+
+          <script>
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+              }, 500);
+            }
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
   const confirmMockPayment = () => {
     if (!modelToUnlock) return;
 
@@ -2653,6 +2818,43 @@ function App() {
                     </div>
                   </div>
                 )}
+
+                {/* DIGITAL PRODUCT / PDF MANUAL SECTION */}
+                <div className="glass-card" style={{ marginTop: '20px', padding: '20px', border: '1px solid rgba(236,72,153,0.25)', background: 'rgba(236,72,153,0.02)', textAlign: 'left', borderRadius: '10px', marginBottom: '25px' }}>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: '2rem' }}>📚</span>
+                    <div>
+                      <h5 style={{ fontSize: '1rem', fontWeight: 800, color: '#f472b6', margin: '0 0 6px 0' }}>
+                        Virtual Creator Archive™ - Manual de Monetização & Operação (PDF)
+                      </h5>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: '0 0 15px 0', lineHeight: '1.4' }}>
+                        Seu manual oficial de implantação foi gerado! Ele contém todas as mídias e pastas adquiridas, seu cupom de 50% de desconto para campanhas de divulgação nas redes sociais (Instagram, TikTok, Kwai, Threads, X), e o guia passo a passo de como usar Inteligência Artificial (Grok, Midjourney, ChatGPT) para expandir as fotos e vídeos da modelo.
+                      </p>
+                      <button
+                        onClick={() => {
+                          const purchasedModelsList = models.filter(m => successModelNames.includes(m.name));
+                          downloadPDFManual(purchasedModelsList);
+                        }}
+                        className="btn btn-primary"
+                        style={{ 
+                          background: 'linear-gradient(135deg, #ec4899, #d946ef)', 
+                          border: 'none', 
+                          padding: '10px 18px', 
+                          borderRadius: '8px', 
+                          fontWeight: 800, 
+                          fontSize: '0.85rem', 
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          color: '#fff'
+                        }}
+                      >
+                        <Layers size={16} /> 📥 Gerar e Baixar PDF do Manual
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
                 {upsell2Active && (
                   <button 
