@@ -2745,90 +2745,16 @@ function App() {
                   Parabéns! O pagamento de **R$ {successTotal.toFixed(2)}** foi aprovado com sucesso via Dice API. 
                   As modelos **{successModelNames.join(', ')}** foram vinculadas à sua licença exclusiva e **foram deletadas da vitrine pública**.
                 </p>
-                <div className="glass-card" style={{ padding: '15px', textAlign: 'left', fontSize: '0.85rem', marginBottom: '25px', borderColor: 'rgba(16,185,129,0.3)' }}>
-                  <strong>Próximos Passos:</strong>
-                  <ul style={{ paddingLeft: '15px', marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <li>1. O link com a pasta completa do Google Drive foi enviado para o WhatsApp **{custWhatsapp}**.</li>
-                    <li>2. Uma cópia do contrato de direitos autorais foi enviada para o e-mail **{custEmail}**.</li>
-                    <li>3. Atualizações semanais de mídia serão enviadas no mesmo contato.</li>
-                    {upsell2Active && (
-                      <li style={{ color: '#ec4899', fontWeight: 600 }}>🌟 Acesso ao Gerador de Contas / Painel Privacy VIP liberado!</li>
-                    )}
-                  </ul>
-                </div>
-
-                {/* PREMIUM DOWNLOAD SECTION */}
-                {models.filter(m => successModelNames.includes(m.name)).length > 0 && (
-                  <div style={{ marginTop: '20px', marginBottom: '25px', textAlign: 'left' }}>
-                    <h5 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '12px', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      📥 Acesso Imediato aos Arquivos:
-                    </h5>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      {models.filter(m => successModelNames.includes(m.name)).map(model => (
-                        <div key={model.id} className="glass-card" style={{ padding: '12px 15px', background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.08)' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                            <img 
-                              src={model.cover} 
-                              alt={model.name} 
-                              style={{ width: '45px', height: '45px', borderRadius: '8px', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.1)' }}
-                            />
-                            <div>
-                              <strong style={{ fontSize: '0.95rem', color: '#fff', display: 'block' }}>{model.name}</strong>
-                              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{model.photosCount} Fotos • {model.videosCount} Vídeos</div>
-                            </div>
-                          </div>
-                          {model.delivery_links && model.delivery_links.length > 0 ? (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                              {model.delivery_links.map((link, idx) => (
-                                <a
-                                  key={idx}
-                                  href={link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="btn btn-primary"
-                                  style={{ 
-                                    padding: '10px 14px', 
-                                    fontSize: '0.85rem', 
-                                    display: 'inline-flex', 
-                                    alignItems: 'center', 
-                                    justifyContent: 'center', 
-                                    gap: '8px', 
-                                    background: 'linear-gradient(135deg, var(--color-primary), #d946ef)', 
-                                    border: 'none',
-                                    textDecoration: 'none',
-                                    color: '#fff',
-                                    borderRadius: '6px',
-                                    fontWeight: 600,
-                                    cursor: 'pointer',
-                                    transition: 'opacity 0.2s'
-                                  }}
-                                >
-                                  <ExternalLink size={16} /> 
-                                  {model.delivery_links!.length > 1 ? `Acessar Pasta ${idx + 1}` : 'Acessar Link de Entrega'}
-                                </a>
-                              ))}
-                            </div>
-                          ) : (
-                            <div style={{ fontSize: '0.8rem', color: '#64748b', background: 'rgba(255,255,255,0.03)', padding: '8px', borderRadius: '6px', textAlign: 'center', border: '1px dashed rgba(255,255,255,0.05)' }}>
-                              Nenhum link cadastrado para esta modelo.
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* DIGITAL PRODUCT / PDF MANUAL SECTION */}
-                <div className="glass-card" style={{ marginTop: '20px', padding: '20px', border: '1px solid rgba(236,72,153,0.25)', background: 'rgba(236,72,153,0.02)', textAlign: 'left', borderRadius: '10px', marginBottom: '25px' }}>
+                {/* DIGITAL PRODUCT / PDF MANUAL SECTION (AT THE TOP) */}
+                <div className="glass-card" style={{ marginTop: '20px', padding: '20px', border: '1px solid rgba(236,72,153,0.3)', background: 'rgba(236,72,153,0.04)', textAlign: 'left', borderRadius: '10px', marginBottom: '25px', boxShadow: '0 4px 15px rgba(236,72,153,0.1)' }}>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                    <span style={{ fontSize: '2rem' }}>📚</span>
+                    <span style={{ fontSize: '2.5rem' }}>📚</span>
                     <div>
-                      <h5 style={{ fontSize: '1rem', fontWeight: 800, color: '#f472b6', margin: '0 0 6px 0' }}>
-                        Virtual Creator Archive™ - Manual de Monetização & Operação (PDF)
+                      <h5 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#f472b6', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        Virtual Creator Archive™ - Manual de Monetização & Acesso Completo
                       </h5>
-                      <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: '0 0 15px 0', lineHeight: '1.4' }}>
-                        Seu manual oficial de implantação foi gerado! Ele contém todas as mídias e pastas adquiridas, seu cupom de 50% de desconto para campanhas de divulgação nas redes sociais (Instagram, TikTok, Kwai, Threads, X), e o guia passo a passo de como usar Inteligência Artificial (Grok, Midjourney, ChatGPT) para expandir as fotos e vídeos da modelo.
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', margin: '0 0 15px 0', lineHeight: '1.5' }}>
+                        <strong>ATENÇÃO:</strong> Seus links de acesso às mídias adquiridas e do Google Drive estão dentro do manual abaixo. Clique no botão para gerar o PDF oficial contendo os arquivos, o cupom de 50% de desconto e o tutorial completo de monetização com Inteligência Artificial.
                       </p>
                       <button
                         onClick={() => {
@@ -2839,21 +2765,34 @@ function App() {
                         style={{ 
                           background: 'linear-gradient(135deg, #ec4899, #d946ef)', 
                           border: 'none', 
-                          padding: '10px 18px', 
+                          padding: '12px 24px', 
                           borderRadius: '8px', 
                           fontWeight: 800, 
-                          fontSize: '0.85rem', 
+                          fontSize: '0.9rem', 
                           cursor: 'pointer',
                           display: 'inline-flex',
                           alignItems: 'center',
                           gap: '8px',
-                          color: '#fff'
+                          color: '#fff',
+                          boxShadow: '0 4px 15px rgba(236,72,153,0.3)'
                         }}
                       >
-                        <Layers size={16} /> 📥 Gerar e Baixar PDF do Manual
+                        <Layers size={18} /> 📥 Gerar e Baixar PDF com Todos os Links
                       </button>
                     </div>
                   </div>
+                </div>
+
+                <div className="glass-card" style={{ padding: '15px', textAlign: 'left', fontSize: '0.85rem', marginBottom: '25px', borderColor: 'rgba(16,185,129,0.3)' }}>
+                  <strong>Próximos Passos:</strong>
+                  <ul style={{ paddingLeft: '15px', marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <li>1. O link com a pasta completa do Google Drive foi enviado para o WhatsApp **{custWhatsapp}**.</li>
+                    <li>2. Uma cópia do contrato de direitos autorais foi enviada para o e-mail **{custEmail}**.</li>
+                    <li>3. Atualizações semanais de mídia serão enviadas no mesmo contato.</li>
+                    {upsell2Active && (
+                      <li style={{ color: '#ec4899', fontWeight: 600 }}>🌟 Acesso ao Gerador de Contas / Painel Privacy VIP liberado!</li>
+                    )}
+                  </ul>
                 </div>
 
                 {upsell2Active && (
