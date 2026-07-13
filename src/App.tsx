@@ -159,18 +159,46 @@ function App() {
   const [newPassword, setNewPassword] = useState('');
   const [passwordSuccess, setPasswordSuccess] = useState('');
 
+  // Helper to apply random sold models for this session (25 models)
+  const applySessionSoldStatus = (allModels: Model[]): Model[] => {
+    let soldIds: string[] = [];
+    const storedSold = sessionStorage.getItem('hotmodel_session_sold_ids');
+    if (storedSold) {
+      try {
+        soldIds = JSON.parse(storedSold);
+      } catch (e) {
+        soldIds = [];
+      }
+    }
+
+    if (!soldIds || soldIds.length === 0) {
+      // Pick 25 random models
+      const shuffled = [...allModels].sort(() => 0.5 - Math.random());
+      soldIds = shuffled.slice(0, 25).map(m => m.id);
+      sessionStorage.setItem('hotmodel_session_sold_ids', JSON.stringify(soldIds));
+    }
+
+    return allModels.map(m => {
+      if (soldIds.includes(m.id)) {
+        return { ...m, isAvailable: false };
+      }
+      return m;
+    });
+  };
+
   // Initial Load
   useEffect(() => {
     initializeStorage();
     const initial = getModels();
-    setModels(initial);
+    const withSold = applySessionSoldStatus(initial);
+    setModels(withSold);
 
     // Find a default model for Privacy panel
-    const sold = initial.find(m => !m.isAvailable);
+    const sold = withSold.find(m => !m.isAvailable);
     if (sold) {
       setPrivacyModelId(sold.id);
-    } else if (initial.length > 0) {
-      setPrivacyModelId(initial[0].id);
+    } else if (withSold.length > 0) {
+      setPrivacyModelId(withSold[0].id);
     }
 
     setLeads(getLeads());
@@ -215,7 +243,9 @@ function App() {
 
   // Update lists when operations happen
   const refreshData = () => {
-    setModels(getModels());
+    const initial = getModels();
+    const withSold = applySessionSoldStatus(initial);
+    setModels(withSold);
     setLeads(getLeads());
     setTransactions(getTransactions());
     setStats(getStats());
@@ -408,11 +438,13 @@ function App() {
     return ['Todos', ...Array.from(cats)];
   };
 
-  // Filtered models (only active/sold models are NOT displayed)
+  // Filtered models sorted alphabetically (A-Z) by name
   const getFilteredModels = () => {
-    const activeModels = models.filter(m => m.isAvailable);
-    if (selectedCategory === 'Todos') return activeModels;
-    return activeModels.filter(m => m.categories.includes(selectedCategory));
+    let result = selectedCategory === 'Todos'
+      ? [...models]
+      : models.filter(m => m.categories.includes(selectedCategory));
+    
+    return result.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
   };
 
   // Admin Login action
@@ -621,14 +653,24 @@ function App() {
         {getFilteredModels().map(model => {
           const discountPrice = model.price * (1 - model.discountPercentage / 100);
           return (
-            <div key={model.id} className={`model-card ${model.isFeatured ? 'featured' : ''}`}>
+            <div key={model.id} className={`model-card ${model.isFeatured ? 'featured' : ''}`} style={{ opacity: model.isAvailable ? 1 : 0.85 }}>
               {model.isFeatured && <span className="model-badge">Destaque Elite</span>}
               {model.discountPercentage > 0 && (
                 <span className="discount-badge">-{model.discountPercentage}% OFF</span>
               )}
+              {!model.isAvailable && (
+                <span className="model-badge" style={{ background: '#ef4444', left: 'auto', right: '15px' }}>Vendida</span>
+              )}
               
               <div className="model-card-image-container">
-                <img src={cardActiveImages[model.id] || model.cover} alt={model.name} className="model-card-img" />
+                <img 
+                  src={cardActiveImages[model.id] || model.cover} 
+                  alt={model.name} 
+                  className="model-card-img" 
+                  style={{
+                    filter: model.isAvailable ? 'none' : 'grayscale(0.8) brightness(0.5)'
+                  }}
+                />
                 
                 {/* Previews Thumbnails Grid/Row Overlay inside Card */}
                 {model.gallery && model.gallery.length > 0 && (
@@ -716,19 +758,37 @@ function App() {
                     <span className="new-price">R$ {discountPrice.toFixed(2)}</span>
                   </div>
                   
-                  <button 
-                    className="btn btn-primary" 
-                    onClick={() => {
-                      setModelToUnlock(model);
-                      setCheckoutStep(1);
-                      setUpsell1Active(false);
-                      setUpsell2Active(false);
-                      setUpsell1ModelId('');
-                      setPaymentError('');
-                    }}
-                  >
-                    Adquirir Direitos <ChevronRight size={16} />
-                  </button>
+                  {model.isAvailable ? (
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => {
+                        setModelToUnlock(model);
+                        setCheckoutStep(1);
+                        setUpsell1Active(false);
+                        setUpsell2Active(false);
+                        setUpsell1ModelId('');
+                        setPaymentError('');
+                      }}
+                    >
+                      Adquirir Direitos <ChevronRight size={16} />
+                    </button>
+                  ) : (
+                    <button 
+                      className="btn" 
+                      disabled
+                      style={{
+                        background: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        color: '#64748b',
+                        cursor: 'not-allowed',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}
+                    >
+                      Indisponível <Lock size={14} />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
