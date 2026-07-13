@@ -1949,7 +1949,6 @@ function App() {
                     </span>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
                       {modelToUnlock.gallery.slice(0, 4).map((img, idx) => {
-                        const isLocked = idx >= 1; // Show first image clear, others locked/blurred
                         return (
                           <div 
                             key={idx} 
@@ -1969,30 +1968,9 @@ function App() {
                                 width: '100%', 
                                 height: '100%', 
                                 objectFit: 'cover',
-                                filter: isLocked ? 'blur(6px) brightness(0.6)' : 'none',
-                                transition: 'filter 0.3s ease'
+                                transition: 'transform 0.3s ease'
                               }} 
                             />
-                            {isLocked && (
-                              <div style={{ 
-                                position: 'absolute', 
-                                top: 0, 
-                                left: 0, 
-                                width: '100%', 
-                                height: '100%', 
-                                display: 'flex', 
-                                flexDirection: 'column',
-                                justifyContent: 'center', 
-                                alignItems: 'center', 
-                                background: 'rgba(0,0,0,0.4)',
-                                padding: '4px'
-                              }}>
-                                <Lock size={16} color="#f472b6" style={{ marginBottom: '2px' }} />
-                                <span style={{ fontSize: '0.55rem', fontWeight: 600, color: '#fbcfe8', textAlign: 'center', textTransform: 'uppercase', lineHeight: 1.1 }}>
-                                  Bloqueado
-                                </span>
-                              </div>
-                            )}
                           </div>
                         );
                       })}
