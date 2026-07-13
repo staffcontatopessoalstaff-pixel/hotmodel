@@ -45,7 +45,8 @@ import {
 
 function App() {
   // Navigation & Auth State
-  const [route, setRoute] = useState<'home' | 'admin-login' | 'admin-dashboard' | 'privacy-panel'>('home');
+  const [route, setRoute] = useState<'home' | 'admin-login' | 'admin-dashboard' | 'privacy-panel' | 'privacy-profile'>('home');
+  const [privacyProfileId, setPrivacyProfileId] = useState<string>('');
   const [adminTab, setAdminTab] = useState<'dashboard' | 'models' | 'leads' | 'transactions' | 'settings'>('dashboard');
 
   // Privacy Platform Simulation States
@@ -218,6 +219,10 @@ function App() {
         setRoute('admin-login');
       } else if (window.location.hash === '#privacy') {
         setRoute('privacy-panel');
+      } else if (window.location.hash.startsWith('#privacy-profile/')) {
+        setRoute('privacy-profile');
+        const id = window.location.hash.split('/')[1];
+        setPrivacyProfileId(id);
       } else if (window.location.hash === '#home' || window.location.hash === '') {
         setRoute('home');
       }
@@ -1675,6 +1680,42 @@ function App() {
                   </div>
                 </div>
 
+                {/* DYNAMIC BIO LINK / FUNNEL LINK PROMOTION */}
+                <div className="privacy-card" style={{ marginTop: '20px', border: '1px solid rgba(236,72,153,0.3)', background: 'rgba(236,72,153,0.02)' }}>
+                  <h4 style={{ fontSize: '1.05rem', marginBottom: '8px', color: '#ec4899', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    🔗 Link do seu Perfil Privacy para colocar na Bio:
+                  </h4>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginBottom: '15px' }}>
+                    Coloque esse link na bio das redes sociais (TikTok, Instagram, etc.) da modelo para direcionar o tráfego de fãs para o seu funil de alta conversão!
+                  </p>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <input 
+                      type="text" 
+                      readOnly 
+                      value={`${window.location.origin}/#privacy-profile/${activeModel.id}`} 
+                      style={{ flex: 1, background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)', color: '#f472b6', padding: '10px 12px', borderRadius: '8px', fontSize: '0.8rem', outline: 'none', fontWeight: 600 }} 
+                    />
+                    <button 
+                      onClick={() => {
+                        navigator.clipboard.writeText(`${window.location.origin}/#privacy-profile/${activeModel.id}`);
+                        alert('Link copiado com sucesso! Coloque-o na Bio para atrair fãs.');
+                      }}
+                      style={{ background: 'linear-gradient(135deg, #ec4899, #d946ef)', border: 'none', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer', color: 'white', fontWeight: 700, fontSize: '0.8rem' }}
+                    >
+                      Copiar Link
+                    </button>
+                    <a
+                      href={`/#privacy-profile/${activeModel.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary"
+                      style={{ padding: '10px 15px', borderRadius: '8px', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.15)', color: '#fff' }}
+                    >
+                      Testar Funil ➔
+                    </a>
+                  </div>
+                </div>
+
                 <div className="privacy-card" style={{ marginTop: '20px' }}>
                   <h4 style={{ fontSize: '1.1rem', marginBottom: '15px', fontWeight: 700 }}>Histórico de Atividades Recentes (Simulador)</h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -1943,6 +1984,219 @@ function App() {
     );
   };
 
+  const renderPrivacyProfile = () => {
+    const profileModel = models.find(m => m.id === privacyProfileId) || models[0];
+
+    if (!profileModel) {
+      return (
+        <div style={{ padding: '50px', textAlign: 'center' }}>
+          <h4>Modelo não encontrada.</h4>
+          <button className="btn btn-primary" onClick={() => { setRoute('home'); window.location.hash = ''; }}>Voltar para Vitrine</button>
+        </div>
+      );
+    }
+
+    const discountPrice = profileModel.price * (1 - profileModel.discountPercentage / 100);
+
+    return (
+      <div style={{ maxWidth: '500px', margin: '0 auto', background: '#0f172a', minHeight: '100vh', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)', position: 'relative', color: '#fff', paddingBottom: '80px' }}>
+        {/* Header navigation */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'sticky', top: 0, background: 'rgba(15, 23, 42, 0.95)', zIndex: 10, backdropFilter: 'blur(10px)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '1.2rem', fontWeight: 900, background: 'linear-gradient(135deg, #ec4899, #d946ef)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              🛡️ Privacy
+            </span>
+            <span style={{ background: '#ec4899', color: '#fff', fontSize: '0.65rem', padding: '2px 6px', borderRadius: '4px', fontWeight: 800 }}>VIP</span>
+          </div>
+          <button 
+            className="btn" 
+            style={{ padding: '6px 12px', fontSize: '0.75rem', background: 'rgba(255,255,255,0.05)', color: '#94a3b8', border: '1px solid rgba(255,255,255,0.1)' }}
+            onClick={() => { setRoute('home'); window.location.hash = ''; }}
+          >
+            Vitrine
+          </button>
+        </div>
+
+        {/* Profile Banner */}
+        <div style={{ height: '140px', position: 'relative', background: '#1e293b', overflow: 'hidden' }}>
+          <img 
+            src={profileModel.cover} 
+            alt="Banner" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(3px) brightness(0.6)' }} 
+          />
+        </div>
+
+        {/* Profile Info */}
+        <div style={{ padding: '0 15px', position: 'relative', marginTop: '-50px', marginBottom: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '15px' }}>
+            <img 
+              src={profileModel.cover} 
+              alt={profileModel.name} 
+              style={{ width: '90px', height: '90px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #0f172a', boxShadow: '0 4px 10px rgba(0,0,0,0.5)' }} 
+            />
+            <button 
+              className="btn btn-primary"
+              style={{ background: 'linear-gradient(135deg, #ec4899, #d946ef)', border: 'none', padding: '10px 20px', borderRadius: '20px', fontWeight: 800, fontSize: '0.85rem' }}
+              onClick={() => {
+                setModelToUnlock(profileModel);
+                setCheckoutStep(1);
+              }}
+            >
+              Assinar Canal
+            </button>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#fff' }}>{profileModel.name}</h3>
+            <span style={{ color: '#ec4899', display: 'inline-flex' }} title="Criadora Verificada">
+              <CheckCircle size={18} fill="#ec4899" color="#0f172a" />
+            </span>
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#ec4899', fontWeight: 600, marginBottom: '12px' }}>
+            @official_{profileModel.name.toLowerCase().replace(/\s+/g, '')}
+          </div>
+
+          {/* Stats Bar */}
+          <div style={{ display: 'flex', gap: '20px', fontSize: '0.85rem', color: '#94a3b8', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '15px', marginBottom: '15px' }}>
+            <span><strong>{profileModel.photosCount + 12}</strong> Posts</span>
+            <span><strong>{(profileModel.views * 12 + 432).toLocaleString()}</strong> Curtidas</span>
+            <span><strong>R$ {discountPrice.toFixed(2)}</strong>/mês</span>
+          </div>
+
+          {/* Biography */}
+          <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: '1.6', whiteSpace: 'pre-line' }}>
+            {profileModel.description || `Página oficial de ${profileModel.name}. Conteúdo exclusivo e ensaios premium inéditos.`}
+          </p>
+        </div>
+
+        {/* Main CTA subscription box */}
+        <div style={{ padding: '0 15px', marginBottom: '30px' }}>
+          <div className="glass-card" style={{ padding: '20px', background: 'rgba(236,72,153,0.03)', borderColor: 'rgba(236,72,153,0.2)', borderRadius: '12px', textAlign: 'center' }}>
+            <span style={{ fontSize: '0.75rem', color: '#ec4899', fontWeight: 800, textTransform: 'uppercase', display: 'block', marginBottom: '5px' }}>
+              Acesso Completo e Imediato
+            </span>
+            <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '15px' }}>Assine o canal de {profileModel.name}</h4>
+            
+            <ul style={{ listStyle: 'none', padding: 0, margin: '0 auto 20px auto', maxWidth: '280px', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.8rem', color: '#94a3b8' }}>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ color: '#ec4899' }}>✓</span> Acesso a {profileModel.photosCount} fotos em alta resolução
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ color: '#ec4899' }}>✓</span> Assista a {profileModel.videosCount} vídeos exclusivos 100% sem censura
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ color: '#ec4899' }}>✓</span> Chat VIP direto com a criadora no privado
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ color: '#ec4899' }}>✓</span> Atualizações semanais de novo material
+              </li>
+            </ul>
+
+            <button 
+              className="btn btn-primary"
+              style={{ width: '100%', background: 'linear-gradient(135deg, #ec4899, #d946ef)', border: 'none', padding: '14px', borderRadius: '8px', fontWeight: 800, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 15px rgba(236,72,153,0.3)' }}
+              onClick={() => {
+                setModelToUnlock(profileModel);
+                setCheckoutStep(1);
+              }}
+            >
+              ASSINAR AGORA POR R$ {discountPrice.toFixed(2)}/mês
+            </button>
+          </div>
+        </div>
+
+        {/* FEED / CONTENT TABS */}
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '15px' }}>
+          <div style={{ display: 'flex', padding: '0 15px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '10px', marginBottom: '15px' }}>
+            <span style={{ color: '#ec4899', borderBottom: '2px solid #ec4899', paddingBottom: '10px', fontSize: '0.85rem', fontWeight: 700 }}>
+              PUBLICADO (Feed)
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 15px' }}>
+            {/* Locked Post 1 */}
+            <div className="glass-card" style={{ padding: '15px', background: 'rgba(255,255,255,0.01)', borderColor: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                <img src={profileModel.cover} alt="avatar" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} />
+                <div>
+                  <strong style={{ fontSize: '0.85rem', color: '#fff' }}>{profileModel.name}</strong>
+                  <span style={{ display: 'block', fontSize: '0.7rem', color: '#64748b' }}>Há 2 horas</span>
+                </div>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: '#cbd5e1', marginBottom: '15px' }}>
+                Bastidores do meu ensaio VIP exclusivo que acabei de postar! Ficou muito sensual, corre pra ver... 🔞🔥🫣
+              </p>
+              
+              {/* Blur/Lock Overlay */}
+              <div 
+                style={{ height: '220px', borderRadius: '8px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
+                onClick={() => {
+                  setModelToUnlock(profileModel);
+                  setCheckoutStep(1);
+                }}
+              >
+                <img 
+                  src={profileModel.cover} 
+                  alt="censored" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(20px) brightness(0.4)' }} 
+                />
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px', background: 'rgba(0,0,0,0.5)' }}>
+                  <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: 'rgba(236,72,153,0.1)', border: '1px solid #ec4899', color: '#ec4899', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Lock size={20} />
+                  </div>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>Conteúdo exclusivo para assinantes</span>
+                  <span style={{ fontSize: '0.75rem', color: '#ec4899', fontWeight: 600 }}>Assine para desbloquear</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Locked Post 2 */}
+            <div className="glass-card" style={{ padding: '15px', background: 'rgba(255,255,255,0.01)', borderColor: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                <img src={profileModel.cover} alt="avatar" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} />
+                <div>
+                  <strong style={{ fontSize: '0.85rem', color: '#fff' }}>{profileModel.name}</strong>
+                  <span style={{ display: 'block', fontSize: '0.7rem', color: '#64748b' }}>Ontem</span>
+                </div>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: '#cbd5e1', marginBottom: '15px' }}>
+                Quem gosta de vídeos amadores? Acabei de subir o meu preferido 🙈😈 Vem ver!
+              </p>
+              
+              {/* Blur/Lock Overlay */}
+              <div 
+                style={{ height: '220px', borderRadius: '8px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
+                onClick={() => {
+                  setModelToUnlock(profileModel);
+                  setCheckoutStep(1);
+                }}
+              >
+                <img 
+                  src={profileModel.cover} 
+                  alt="censored" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(20px) brightness(0.4)' }} 
+                />
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px', background: 'rgba(0,0,0,0.5)' }}>
+                  <div style={{ width: '45px', height: '45px', borderRadius: '50%', background: 'rgba(236,72,153,0.1)', border: '1px solid #ec4899', color: '#ec4899', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Lock size={20} />
+                  </div>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>Conteúdo exclusivo para assinantes</span>
+                  <span style={{ fontSize: '0.75rem', color: '#ec4899', fontWeight: 600 }}>Assine para desbloquear</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Footer info branding */}
+        <div style={{ textAlign: 'center', padding: '30px 15px', color: '#64748b', fontSize: '0.7rem', borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: '40px' }}>
+          Este é um perfil demonstrativo. Todos os direitos reservados.
+        </div>
+      </div>
+    );
+  };
+
   // Helper calculations for summary
   const getMainPrice = () => {
     if (!modelToUnlock) return 0;
@@ -1973,6 +2227,7 @@ function App() {
       {route === 'admin-login' && renderLogin()}
       {route === 'admin-dashboard' && renderAdmin()}
       {route === 'privacy-panel' && renderPrivacyPanel()}
+      {route === 'privacy-profile' && renderPrivacyProfile()}
 
       {/* AGE VERIFICATION MODAL OVERLAY */}
       {!ageVerified && (
@@ -2310,20 +2565,6 @@ function App() {
                       <Copy size={12} /> {isCopied ? 'Copiado!' : 'Copiar'}
                     </button>
                   </div>
-                </div>
-
-                {/* SIMULATED PAYMENT CONFIRMATION (TESTER UTILITY) */}
-                <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '20px', marginTop: '20px', textAlign: 'center' }}>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--color-primary)', fontWeight: 700, marginBottom: '10px' }}>
-                    ⚙️ Simulador de Integração Dice API
-                  </p>
-                  <button 
-                    className="btn btn-primary" 
-                    style={{ background: 'linear-gradient(135deg, var(--color-success), #059669)', border: 'none', boxShadow: 'none', width: '100%', padding: '12px' }}
-                    onClick={confirmMockPayment}
-                  >
-                    Confirmar Pagamento no Simulador
-                  </button>
                 </div>
               </div>
             )}
