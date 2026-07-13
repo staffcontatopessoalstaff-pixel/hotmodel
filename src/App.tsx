@@ -2731,6 +2731,17 @@ function App() {
                     </button>
                   </div>
                 </div>
+
+                {/* DEV BYPASS SIMULATOR */}
+                <div style={{ marginTop: '20px', borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: '15px', textAlign: 'center' }}>
+                  <button
+                    type="button"
+                    onClick={confirmMockPayment}
+                    style={{ background: 'none', border: 'none', color: '#64748b', fontSize: '0.75rem', textDecoration: 'underline', cursor: 'pointer' }}
+                  >
+                    ⚙️ Simular Aprovação do Pix (Apenas para Teste)
+                  </button>
+                </div>
               </div>
             )}
 
