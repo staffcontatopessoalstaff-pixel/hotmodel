@@ -835,13 +835,13 @@ function App() {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="copy-badge">
-          <Sparkles size={14} /> Modelos 100% Únicas e Exclusivas no Mercado
+          <Sparkles size={14} /> Mais de 200 Modelos de Alta Conversão à Venda
         </div>
         <h1 className="hero-title">
-          Adquira os Direitos de <span>Sua Modelo Exclusiva</span>
+          Mais de 200 Modelos Exclusivas <span>À Venda</span>
         </h1>
         <p className="hero-subtitle">
-          Cada cliente possui sua própria modelo validada. Ao comprar, você adquire o direito de uso exclusivo do acervo completo da modelo, e ela é **imediatamente retirada da vitrine pública** para sempre.
+          Temos mais de 200 modelos exclusivas e validadas prontas para implantação rápida. Ao comprar, você adquire a licença de uso exclusiva do acervo completo da modelo, e ela é **imediatamente retirada da vitrine pública** para sempre.
         </p>
       </section>
 
