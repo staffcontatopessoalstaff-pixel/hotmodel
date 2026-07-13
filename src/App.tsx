@@ -305,6 +305,13 @@ function App() {
         })
       });
 
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
+        throw new Error('O servidor retornou uma resposta inválida (não-JSON).');
+      }
+
       const data = await response.json();
       setPaymentLoading(false);
 
@@ -2213,6 +2220,20 @@ function App() {
                     disabled={paymentLoading}
                   >
                     {paymentLoading ? 'Gerando PIX com a Dice API...' : 'Confirmar e Ir para o Pagamento'}
+                  </button>
+                </div>
+
+                <div style={{ marginTop: '20px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '15px', textAlign: 'center' }}>
+                  <button
+                    type="button"
+                    className="btn"
+                    style={{ width: '100%', background: 'rgba(255,255,255,0.03)', color: '#94a3b8', fontSize: '0.8rem', border: '1px dashed rgba(255,255,255,0.15)', cursor: 'pointer' }}
+                    onClick={() => {
+                      // Bypasses the API generation and starts mock payment approval
+                      confirmMockPayment();
+                    }}
+                  >
+                    ⚙️ Testar sem API (Pular Pix e Ver Links de Sucesso)
                   </button>
                 </div>
               </form>
