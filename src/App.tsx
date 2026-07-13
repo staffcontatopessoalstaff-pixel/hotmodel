@@ -2006,19 +2006,61 @@ function App() {
                     </label>
 
                     {upsell1Active && (
-                      <div style={{ marginTop: '12px', display: 'flex', gap: '10px', alignItems: 'center' }}>
-                        <select 
-                          className="form-control"
-                          value={upsell1ModelId}
-                          onChange={(e) => setUpsell1ModelId(e.target.value)}
-                          style={{ padding: '8px 12px', fontSize: '0.85rem', flex: 1 }}
-                        >
-                          {models.filter(m => m.isAvailable && m.id !== modelToUnlock.id).map(m => (
-                            <option key={m.id} value={m.id}>
-                              {m.name} (Por apenas R$ {((m.price * (1 - m.discountPercentage / 100)) * 0.5).toFixed(2)})
-                            </option>
-                          ))}
-                        </select>
+                      <div>
+                        <div style={{ marginTop: '12px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+                          <select 
+                            className="form-control"
+                            value={upsell1ModelId}
+                            onChange={(e) => setUpsell1ModelId(e.target.value)}
+                            style={{ padding: '8px 12px', fontSize: '0.85rem', flex: 1 }}
+                          >
+                            {models.filter(m => m.isAvailable && m.id !== modelToUnlock.id).map(m => (
+                              <option key={m.id} value={m.id}>
+                                {m.name} (Por apenas R$ {((m.price * (1 - m.discountPercentage / 100)) * 0.5).toFixed(2)})
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Upsell Model Preview Gallery */}
+                        {(() => {
+                          const upsellModel = models.find(m => m.id === upsell1ModelId);
+                          if (upsellModel && upsellModel.gallery && upsellModel.gallery.length > 0) {
+                            return (
+                              <div style={{ marginTop: '15px' }}>
+                                <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-secondary)', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>
+                                  🔥 PRÉVIA DO ACERVO DE {upsellModel.name.toUpperCase()} ({upsellModel.gallery.length} FOTOS/VÍDEOS)
+                                </span>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                                  {upsellModel.gallery.slice(0, 4).map((img, idx) => (
+                                    <div 
+                                      key={idx} 
+                                      style={{ 
+                                        position: 'relative', 
+                                        aspectRatio: '1/1', 
+                                        borderRadius: '8px', 
+                                        overflow: 'hidden',
+                                        border: '1px solid rgba(255,255,255,0.05)',
+                                        background: '#1e293b'
+                                      }}
+                                    >
+                                      <img 
+                                        src={img} 
+                                        alt={`Upsell Amostra ${idx + 1}`} 
+                                        style={{ 
+                                          width: '100%', 
+                                          height: '100%', 
+                                          objectFit: 'cover'
+                                        }} 
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          }
+                          return null;
+                        })()}
                       </div>
                     )}
                   </div>
