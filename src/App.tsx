@@ -2295,6 +2295,69 @@ function App() {
                     )}
                   </ul>
                 </div>
+
+                {/* PREMIUM DOWNLOAD SECTION */}
+                {models.filter(m => successModelNames.includes(m.name)).length > 0 && (
+                  <div style={{ marginTop: '20px', marginBottom: '25px', textAlign: 'left' }}>
+                    <h5 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '12px', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      📥 Acesso Imediato aos Arquivos:
+                    </h5>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {models.filter(m => successModelNames.includes(m.name)).map(model => (
+                        <div key={model.id} className="glass-card" style={{ padding: '12px 15px', background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.08)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                            <img 
+                              src={model.cover} 
+                              alt={model.name} 
+                              style={{ width: '45px', height: '45px', borderRadius: '8px', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.1)' }}
+                            />
+                            <div>
+                              <strong style={{ fontSize: '0.95rem', color: '#fff', display: 'block' }}>{model.name}</strong>
+                              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{model.photosCount} Fotos • {model.videosCount} Vídeos</div>
+                            </div>
+                          </div>
+                          {model.delivery_links && model.delivery_links.length > 0 ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {model.delivery_links.map((link, idx) => (
+                                <a
+                                  key={idx}
+                                  href={link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="btn btn-primary"
+                                  style={{ 
+                                    padding: '10px 14px', 
+                                    fontSize: '0.85rem', 
+                                    display: 'inline-flex', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'center', 
+                                    gap: '8px', 
+                                    background: 'linear-gradient(135deg, var(--color-primary), #d946ef)', 
+                                    border: 'none',
+                                    textDecoration: 'none',
+                                    color: '#fff',
+                                    borderRadius: '6px',
+                                    fontWeight: 600,
+                                    cursor: 'pointer',
+                                    transition: 'opacity 0.2s'
+                                  }}
+                                >
+                                  <ExternalLink size={16} /> 
+                                  {model.delivery_links!.length > 1 ? `Acessar Pasta ${idx + 1}` : 'Acessar Link de Entrega'}
+                                </a>
+                              ))}
+                            </div>
+                          ) : (
+                            <div style={{ fontSize: '0.8rem', color: '#64748b', background: 'rgba(255,255,255,0.03)', padding: '8px', borderRadius: '6px', textAlign: 'center', border: '1px dashed rgba(255,255,255,0.05)' }}>
+                              Nenhum link cadastrado para esta modelo.
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {upsell2Active && (
                   <button 
                     className="btn btn-primary" 

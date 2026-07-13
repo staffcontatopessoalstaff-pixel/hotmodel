@@ -17,6 +17,7 @@ export interface Model {
   views: number;
   earnings: number;
   gallery?: string[];
+  delivery_links?: string[];
 }
 
 export interface Lead {
@@ -57,8 +58,8 @@ export const initializeStorage = () => {
     try {
       const parsed = JSON.parse(storedModels);
       if (Array.isArray(parsed)) {
-        if (parsed.length < 10 || parsed.some(m => !m.gallery)) {
-          resetModels = true; // migração do catálogo antigo ou sem galeria
+        if (parsed.length < 10 || parsed.some(m => !m.gallery || !m.delivery_links)) {
+          resetModels = true; // migração do catálogo antigo ou sem galeria/links
         }
       } else {
         resetModels = true;
