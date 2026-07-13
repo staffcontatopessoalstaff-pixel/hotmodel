@@ -706,9 +706,6 @@ function App() {
                   <span className="model-tag" style={{borderColor: 'rgba(236, 72, 153, 0.3)', color: '#fbcfe8'}}>
                     Apenas 1 licença de uso
                   </span>
-                  <span className="model-tag" style={{borderColor: 'rgba(16, 185, 129, 0.3)', color: '#a7f3d0'}}>
-                    {model.returnDays} Dias de Garantia
-                  </span>
                 </div>
                 
                 <div className="model-price-container">
