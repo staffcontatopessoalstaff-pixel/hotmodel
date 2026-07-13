@@ -107,6 +107,7 @@ function App() {
   // Filters & Selection
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
   const [modelToUnlock, setModelToUnlock] = useState<Model | null>(null);
+  const [cardActiveImages, setCardActiveImages] = useState<Record<string, string>>({});
   
   // Checkout Multi-Step Form State
   const [checkoutStep, setCheckoutStep] = useState<number>(1);
@@ -627,7 +628,64 @@ function App() {
               )}
               
               <div className="model-card-image-container">
-                <img src={model.cover} alt={model.name} className="model-card-img" />
+                <img src={cardActiveImages[model.id] || model.cover} alt={model.name} className="model-card-img" />
+                
+                {/* Previews Thumbnails Grid/Row Overlay inside Card */}
+                {model.gallery && model.gallery.length > 0 && (
+                  <div 
+                    className="card-thumbnails-overlay"
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      width: '100%',
+                      display: 'flex',
+                      gap: '5px',
+                      padding: '8px 10px',
+                      overflowX: 'auto',
+                      background: 'linear-gradient(to top, rgba(15, 15, 21, 0.95) 60%, rgba(15, 15, 21, 0))',
+                      zIndex: 3,
+                      borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                      scrollbarWidth: 'none',
+                    }}
+                  >
+                    {model.gallery.map((imgUrl, idx) => {
+                      const isSelected = (cardActiveImages[model.id] || model.cover) === imgUrl;
+                      return (
+                        <img 
+                          key={idx}
+                          src={imgUrl}
+                          alt={`${model.name} preview thumbnail ${idx + 1}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCardActiveImages(prev => ({
+                              ...prev,
+                              [model.id]: imgUrl
+                            }));
+                          }}
+                          onMouseEnter={() => {
+                            setCardActiveImages(prev => ({
+                              ...prev,
+                              [model.id]: imgUrl
+                            }));
+                          }}
+                          style={{
+                            width: '36px',
+                            height: '36px',
+                            borderRadius: '4px',
+                            objectFit: 'cover',
+                            cursor: 'pointer',
+                            border: isSelected ? '2px solid #ec4899' : '1px solid rgba(255, 255, 255, 0.2)',
+                            opacity: isSelected ? 1 : 0.6,
+                            flexShrink: 0,
+                            transition: 'all 0.15s ease'
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
               </div>
               
               <div className="model-card-content">

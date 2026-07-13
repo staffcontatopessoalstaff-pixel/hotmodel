@@ -1482,3 +1482,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Hide scrollbar for catalog card thumbnails */
+.card-thumbnails-overlay::-webkit-scrollbar {
+  display: none;
+}
+
