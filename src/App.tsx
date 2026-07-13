@@ -125,6 +125,7 @@ function App() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState('');
   const [pixCode, setPixCode] = useState('');
+  const [paymentId, setPaymentId] = useState('');
   const [successModelNames, setSuccessModelNames] = useState<string[]>([]);
   const [successTotal, setSuccessTotal] = useState<number>(0);
   const [isCopied, setIsCopied] = useState(false);
@@ -241,6 +242,37 @@ function App() {
     };
   }, []);
 
+  // Poll transaction status dynamically using Dice API
+  useEffect(() => {
+    if (checkoutStep !== 3 || !paymentId) return;
+
+    let intervalId: any;
+    let isMounted = true;
+
+    const checkStatus = async () => {
+      try {
+        const response = await fetch(`/api/verificar-pagamento?id=${paymentId}`);
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (data.ok && data.status === 'COMPLETED' && isMounted) {
+          clearInterval(intervalId);
+          confirmMockPayment();
+        }
+      } catch (err) {
+        console.error('Erro ao verificar status do pagamento:', err);
+      }
+    };
+
+    // Check every 4 seconds
+    intervalId = setInterval(checkStatus, 4000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
+    };
+  }, [checkoutStep, paymentId]);
+
   // Update lists when operations happen
   const refreshData = () => {
     const initial = getModels();
@@ -317,6 +349,7 @@ function App() {
 
       if (data.ok) {
         setPixCode(data.qr_code_text);
+        setPaymentId(data.payment_id || '');
         setCheckoutStep(3); // Go to Payment display
 
         // Also save this lead in our mockDb immediately!
@@ -775,6 +808,7 @@ function App() {
                         setUpsell2Active(false);
                         setUpsell1ModelId('');
                         setPaymentError('');
+                        setPaymentId('');
                       }}
                     >
                       Adquirir Direitos <ChevronRight size={16} />
