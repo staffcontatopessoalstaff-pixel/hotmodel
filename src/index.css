@@ -1487,3 +1487,35 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
+/* Spinner animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(52, 211, 153, 0.3);
+  border-top-color: #34d399;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  flex-shrink: 0;
+}
+
+/* PIX code box */
+.pix-code-box {
+  margin-bottom: 16px;
+}
+.pix-code-text {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.72rem;
+  word-break: break-all;
+  color: #94a3b8;
+  margin-bottom: 8px;
+  font-family: monospace;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
