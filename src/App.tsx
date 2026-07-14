@@ -134,6 +134,8 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [searchQuery, setSearchQuery] = useState("");
   const [cardActiveImages, setCardActiveImages] = useState<Record<string, string>>({});
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(24);
 
   // Age gate
   const [ageVerified, setAgeVerified] = useState(() => !!localStorage.getItem("hm_age"));
@@ -362,6 +364,7 @@ export default function App() {
   }, [models]);
 
   const filteredModels = useMemo(() => {
+    setVisibleCount(24);
     return models
       .filter(m => selectedCategory === "Todos" || m.categories.includes(selectedCategory))
       .filter(m => !searchQuery || m.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -855,10 +858,13 @@ export default function App() {
         </div>
 
         <div className="model-grid">
-          {filteredModels.map(model => {
+          {filteredModels.slice(0, visibleCount).map(model => {
             const fp = discountedPrice(model);
             return (
-              <div key={model.id} className={`model-card${model.isFeatured ? " featured" : ""}`} style={{ opacity: model.isAvailable ? 1 : 0.8 }}>
+              <div key={model.id} className={`model-card${model.isFeatured ? " featured" : ""}`} style={{ opacity: model.isAvailable ? 1 : 0.8 }}
+                onMouseEnter={() => setHoveredCard(model.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
                 {model.isFeatured && <span className="model-badge">Destaque Elite</span>}
                 {model.discountPercentage > 0 && <span className="discount-badge">-{model.discountPercentage}% OFF</span>}
                 {!model.isAvailable && <span className="model-badge" style={{ background: "#ef4444", left: "auto", right: 15 }}>Vendida</span>}
@@ -868,13 +874,17 @@ export default function App() {
                     src={cardActiveImages[model.id] || model.cover}
                     alt={model.name}
                     className="model-card-img"
+                    loading="lazy"
+                    decoding="async"
                     style={{ filter: model.isAvailable ? "none" : "grayscale(0.8) brightness(0.5)" }}
                     onError={e => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(model.name)}&backgroundColor=ec4899`; }}
                   />
-                  {model.gallery && model.gallery.length > 0 && (
+                  {hoveredCard === model.id && model.gallery && model.gallery.length > 0 && (
                     <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", display: "flex", gap: 5, padding: "8px 10px", overflowX: "auto", background: "linear-gradient(to top,rgba(15,15,21,0.95) 60%,rgba(15,15,21,0))", zIndex: 3, scrollbarWidth: "none" }} className="card-thumbnails-overlay">
                       {model.gallery.map((img, i) => (
-                        <img key={i} src={img} alt="" onClick={e => { e.stopPropagation(); setCardActiveImages(p => ({ ...p, [model.id]: img })); }} onMouseEnter={() => setCardActiveImages(p => ({ ...p, [model.id]: img }))}
+                        <img key={i} src={img} alt="" loading="lazy" decoding="async"
+                          onClick={e => { e.stopPropagation(); setCardActiveImages(p => ({ ...p, [model.id]: img })); }}
+                          onMouseEnter={() => setCardActiveImages(p => ({ ...p, [model.id]: img }))}
                           style={{ width: 36, height: 36, borderRadius: 4, objectFit: "cover", cursor: "pointer", flexShrink: 0, border: (cardActiveImages[model.id] || model.cover) === img ? "2px solid #ec4899" : "1px solid rgba(255,255,255,0.2)", opacity: (cardActiveImages[model.id] || model.cover) === img ? 1 : 0.6, transition: "all 0.15s ease" }} />
                       ))}
                     </div>
@@ -913,6 +923,18 @@ export default function App() {
             );
           })}
         </div>
+
+        {visibleCount < filteredModels.length && (
+          <div style={{ textAlign: "center", marginTop: 32, marginBottom: 8 }}>
+            <button
+              className="btn btn-secondary"
+              style={{ padding: "12px 40px", fontSize: "0.95rem", borderRadius: 100 }}
+              onClick={() => setVisibleCount(v => v + 24)}
+            >
+              Carregar Mais ({filteredModels.length - visibleCount} restantes)
+            </button>
+          </div>
+        )}
 
         <footer className="app-footer">
           <p>© 2026 hotmodel2026 · Conteúdo exclusivo para maiores de 18 anos</p>
