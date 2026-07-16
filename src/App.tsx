@@ -159,7 +159,7 @@ function generatePDF(purchasedModels: Model[]) {
     <strong>⚠️ Atenção:</strong> Os direitos de uso das mídias adquiridas são exclusivos e intransferíveis. Não compartilhe as pastas originais publicamente nem revenda o acesso direto ao conteúdo. A exploração deve ser feita exclusivamente através de uma vitrine de criador de conteúdo (Privacy Painel ou similar). A divulgação indevida das pastas originais resultará em suspensão dos direitos.
   </div>
 
-  <div class="footer"><p>Modelo Que Vende™ © ${new Date().getFullYear()} — Todos os direitos reservados. Powered by Dice API.</p></div>
+  <div class="footer"><p>Modelo Que Vende™ © ${new Date().getFullYear()} — Todos os direitos reservados.</p></div>
   <script>window.onload=function(){setTimeout(function(){window.print()},500)}</script>
   </body></html>`);
   win.document.close();
