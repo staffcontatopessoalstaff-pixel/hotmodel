@@ -70,50 +70,96 @@ function generatePDF(purchasedModels: Model[]) {
         : '<span style="color:#ef4444;font-weight:bold;">Pasta pendente de sincronização.</span>'}
     </div>`).join("");
 
-  win.document.write(`<html><head><title>Virtual_Creator_Archive_Manual_${Date.now()}</title>
+  win.document.write(`<html><head><title>Manual_Modelo_Que_Vende_${Date.now()}</title>
   <style>
-    body{font-family:'Helvetica Neue',Arial,sans-serif;color:#1e293b;background:#fff;margin:0;padding:40px;line-height:1.6}
+    body{font-family:'Helvetica Neue',Arial,sans-serif;color:#1e293b;background:#fff;margin:0;padding:40px;line-height:1.7}
     .header{text-align:center;border-bottom:3px double #ec4899;padding-bottom:20px;margin-bottom:30px}
     .brand{font-size:24px;font-weight:900;letter-spacing:2px;color:#ec4899;text-transform:uppercase}
     .confidential{color:#ef4444;font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:1px;margin-top:5px}
     h1{font-size:22px;font-weight:800;margin:15px 0 5px;color:#0f172a}
-    h2{font-size:14px;font-weight:700;margin-top:25px;color:#ec4899;border-bottom:1px solid #e2e8f0;padding-bottom:5px;text-transform:uppercase}
-    p,li{font-size:13px;color:#334155}ul{padding-left:20px}
-    .coupon-box{border:2px dashed #ec4899;background:#fff5f7;padding:15px;text-align:center;border-radius:8px;margin-top:20px}
-    .coupon-code{font-size:20px;font-weight:900;color:#ec4899;letter-spacing:2px}
+    h2{font-size:14px;font-weight:700;margin-top:28px;color:#ec4899;border-bottom:1px solid #e2e8f0;padding-bottom:5px;text-transform:uppercase}
+    p,li{font-size:13px;color:#334155;margin-bottom:6px}ul{padding-left:20px;margin-top:8px}
+    .step-box{background:#f8fafc;border-left:4px solid #ec4899;padding:12px 16px;border-radius:0 8px 8px 0;margin:10px 0}
+    .step-number{font-size:11px;font-weight:800;color:#ec4899;text-transform:uppercase;letter-spacing:1px}
+    .coupon-box{border:2px dashed #ec4899;background:#fff5f7;padding:18px;text-align:center;border-radius:10px;margin-top:16px}
+    .coupon-code{font-size:26px;font-weight:900;color:#ec4899;letter-spacing:3px;margin:6px 0}
+    .privacy-box{background:#f0fdf4;border:1px solid #86efac;padding:16px;border-radius:8px;margin-top:16px}
+    .privacy-box a{color:#16a34a;font-weight:700}
+    .alert-box{background:#fff7ed;border:1px solid #fdba74;padding:12px 16px;border-radius:8px;margin-top:16px;font-size:12px}
     .footer{margin-top:50px;text-align:center;font-size:10px;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:15px}
     @media print{.no-print{display:none}body{padding:20px}}
   </style></head><body>
   <div class="no-print" style="margin-bottom:20px;text-align:right">
     <button onclick="window.print()" style="background:#ec4899;color:white;border:none;padding:10px 20px;font-weight:bold;border-radius:5px;cursor:pointer">🖨️ Salvar como PDF / Imprimir Manual</button>
   </div>
-  <div class="header"><div class="brand">Virtual Creator Archive™</div><div class="confidential">Documento Altamente Confidencial • Direitos Autorais Reservados</div></div>
-  <h1>MANUAL DE MONETIZAÇÃO & IMPLANTAÇÃO RÁPIDA</h1>
-  <p>Este documento contém as chaves de acesso para as mídias adquiridas e as diretrizes estratégicas para operação e escala do seu funil de vendas.</p>
-  <h2>1. SEUS LINKS DE ACESSO (MÍDIAS ADQUIRIDAS)</h2>
-  <div style="margin-top:15px">${linksHtml}</div>
-  <h2>2. EXPANSÃO COM INTELIGÊNCIA ARTIFICIAL</h2>
-  <p>Use as mídias inclusas para criar conteúdo ilimitado com ferramentas de IA:</p>
-  <ul>
-    <li><strong>FaceSwap:</strong> Use Fooocus ou plugins do Midjourney para novas fotos.</li>
-    <li><strong>ChatGPT / Grok (DALL-E 3):</strong> Descreva novas poses baseadas nas fotos originais.</li>
-    <li><strong>Consistência:</strong> Mantenha iluminação e cores similares às fotos originais.</li>
-  </ul>
-  <h2>3. ESTRATÉGIA DO FUNIL PRIVACY FAKE</h2>
-  <ul>
-    <li><strong>Configure:</strong> Acesse o painel, selecione a modelo, defina o preço e personalize a bio.</li>
-    <li><strong>Link da Bio:</strong> Copie o link e insira no Instagram, TikTok, Kwai, Threads e X.</li>
-    <li><strong>Divulgação:</strong> Publique prévias e use chamadas como "Conteúdo completo no link da bio".</li>
-  </ul>
-  <h2>4. CUPOM DE DESCONTO ATIVADO</h2>
-  <div class="coupon-box">
-    <span style="font-size:12px;font-weight:bold;color:#64748b;text-transform:uppercase">Cupom de 50% OFF Ativado</span><br/>
-    <div class="coupon-code">OFF50VIP</div>
-    <p style="margin:5px 0 0;font-size:11px;color:#64748b">(Válido para a próxima compra neste catálogo)</p>
+  <div class="header">
+    <div class="brand">Modelo Que Vende™</div>
+    <div class="confidential">Manual de Monetização Exclusivo • Acesso Restrito ao Comprador</div>
   </div>
-  <h2>5. TERMOS DE SEGURANÇA</h2>
-  <p><strong>Atenção:</strong> Não divulgue as pastas originais publicamente. A divulgação indevida resultará na suspensão das chaves de acesso e perda dos direitos de revenda.</p>
-  <div class="footer"><p>Virtual Creator Archive™ © ${new Date().getFullYear()} - Todos os direitos reservados. Tecnologia via Dice API.</p></div>
+  <h1>MANUAL COMPLETO — DO ACERVO À PRIMEIRA VENDA</h1>
+  <p>Você adquiriu os direitos de uso exclusivos das mídias abaixo. Este manual contém seus links de acesso e o passo a passo para gerar as primeiras vendas ainda hoje.</p>
+
+  <h2>1. SEUS LINKS DE ACESSO</h2>
+  <div style="margin-top:15px">${linksHtml}</div>
+
+  <h2>2. COMO FAZER A PRIMEIRA VENDA AINDA HOJE</h2>
+  <p>Siga este roteiro na ordem. Cada passo leva menos de 15 minutos.</p>
+
+  <div class="step-box">
+    <div class="step-number">Passo 1 — Abra o acervo e escolha as 3 melhores fotos</div>
+    <p>Acesse a pasta pelo link acima. Selecione 3 fotos de ângulos diferentes: rosto/busto, corpo inteiro e uma foto de maior apelo. Essas serão suas "iscas" de divulgação — <strong>nunca mostre tudo de graça</strong>.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-number">Passo 2 — Monte sua vitrine profissional (grátis)</div>
+    <p>Crie sua página de vendas no <strong>Privacy Painel</strong> — tem período de teste gratuito. Acesse, cadastre a modelo com as 3 fotos escolhidas, defina o preço (sugestão: R$ 19,90 a R$ 49,90) e personalize a bio.</p>
+    <p>Copie o link gerado pela plataforma — esse é o seu link de vendas.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-number">Passo 3 — Coloque o link na bio e comece a divulgar</div>
+    <p>Insira o link da vitrine na bio do Instagram, TikTok, Kwai, Threads e X. Publique as 3 fotos de isca com a chamada: <em>"Conteúdo completo e exclusivo no link da bio 🔗"</em></p>
+    <p>Repita isso 2x por dia nos primeiros 3 dias. A maioria das primeiras vendas acontece nas primeiras 48h de divulgação.</p>
+  </div>
+
+  <div class="step-box">
+    <div class="step-number">Passo 4 — Use IA para multiplicar o conteúdo (avançado)</div>
+    <p>Com as fotos originais em mãos, você pode gerar variações ilimitadas:</p>
+    <ul>
+      <li><strong>FaceSwap (Fooocus / Reface):</strong> Crie novas fotos mantendo as feições da modelo.</li>
+      <li><strong>ChatGPT / Midjourney:</strong> Descreva poses e ambientes baseados nas originais para criar conteúdo novo sem fotografar.</li>
+      <li><strong>Dica:</strong> Mantenha iluminação e paleta de cores similares às fotos originais para consistência.</li>
+    </ul>
+  </div>
+
+  <h2>3. VITRINE PROFISSIONAL — PRIVACY PAINEL</h2>
+  <p>A ferramenta recomendada para montar sua vitrine e receber pagamentos automaticamente. <strong>Você pode testar o site gratuitamente</strong> — sem precisar colocar cartão agora.</p>
+  <div class="privacy-box">
+    <p style="font-size:15px;font-weight:800;color:#16a34a;margin-bottom:8px">🆓 Teste grátis disponível — comece a vender ainda hoje!</p>
+    <p><strong>🔗 Cadastre-se aqui:</strong> <a href="https://app.privacy-s.com/login" target="_blank">app.privacy-s.com/login</a></p>
+    <p>Crie sua conta, cadastre a modelo com as fotos escolhidas, defina o preço e copie o link da sua vitrine. O cliente acessa, paga e recebe o conteúdo — automático, sem você precisar fazer nada manualmente.</p>
+    <p><strong>Planos disponíveis:</strong></p>
+    <ul>
+      <li><strong>Start:</strong> 1 modelo na vitrine — ideal para começar</li>
+      <li><strong>Pro:</strong> 3 modelos na mesma vitrine — recomendado</li>
+      <li><strong>Agência:</strong> escala ilimitada</li>
+    </ul>
+  </div>
+
+  <h2>4. CUPOM EXCLUSIVO — 50% OFF NO PLANO PRO</h2>
+  <p>Após o teste gratuito, se quiser manter o plano Pro ou Agência, use o cupom abaixo para 50% de desconto:</p>
+  <div class="coupon-box">
+    <span style="font-size:12px;font-weight:bold;color:#64748b;text-transform:uppercase">Cupom Privacy Painel — Plano Pro ou Agência</span><br/>
+    <div class="coupon-code">tel050</div>
+    <p style="margin:5px 0 0;font-size:11px;color:#64748b">50% de desconto · Aplique no checkout em <a href="https://app.privacy-s.com/login" style="color:#ec4899">app.privacy-s.com/login</a></p>
+  </div>
+
+  <h2>5. TERMOS DE USO E SEGURANÇA</h2>
+  <div class="alert-box">
+    <strong>⚠️ Atenção:</strong> Os direitos de uso das mídias adquiridas são exclusivos e intransferíveis. Não compartilhe as pastas originais publicamente nem revenda o acesso direto ao conteúdo. A exploração deve ser feita exclusivamente através de uma vitrine de criador de conteúdo (Privacy Painel ou similar). A divulgação indevida das pastas originais resultará em suspensão dos direitos.
+  </div>
+
+  <div class="footer"><p>Modelo Que Vende™ © ${new Date().getFullYear()} — Todos os direitos reservados. Powered by Dice API.</p></div>
   <script>window.onload=function(){setTimeout(function(){window.print()},500)}</script>
   </body></html>`);
   win.document.close();
@@ -324,7 +370,7 @@ export default function App() {
 
     setSuccessModelNames(purchased.map(m => m.name));
     setSuccessTotal(total);
-    setCheckoutStep(5); // → order bump
+    setCheckoutStep(4); // → success direto
     refreshData();
   };
 
@@ -579,7 +625,6 @@ export default function App() {
                 {checkoutStep === 2 && "👤 Dados para Acesso"}
                 {checkoutStep === 3 && "⚡ Efetuar Pagamento"}
                 {checkoutStep === 4 && "🎉 Compra Confirmada!"}
-                {checkoutStep === 5 && "🔥 Oferta Exclusiva"}
               </h3>
               {checkoutStep < 4 && (
                 <button onClick={() => setModelToUnlock(null)} style={{ background: "none", border: "none", color: "#94a3b8", fontSize: "1.8rem", cursor: "pointer", lineHeight: 1 }}>×</button>
@@ -724,46 +769,6 @@ export default function App() {
               </div>
             )}
 
-            {/* STEP 5 — Order Bump (pós-pagamento) */}
-            {checkoutStep === 5 && (
-              <div style={{ textAlign: "center", padding: "10px" }}>
-                <div className="copy-badge" style={{ background: "rgba(236,72,153,0.1)", border: "1px solid rgba(236,72,153,0.2)", color: "#ec4899", marginBottom: 15, display: "inline-flex" }}>
-                  🔥 OPORTUNIDADE ÚNICA: EXCLUSIVO PARA COMPRADORES
-                </div>
-                <h3 style={{ fontSize: "1.6rem", fontWeight: 900, marginBottom: 12, background: "linear-gradient(135deg,#fff,#f472b6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  Ative o Painel Creator Privacy com 50% de Desconto!
-                </h3>
-                <p style={{ color: "#94a3b8", fontSize: "0.85rem", lineHeight: 1.5, marginBottom: 20 }}>
-                  Você acabou de adquirir sua modelo exclusiva! Agora utilize nossa plataforma integrada para simular contas, publicar mídias bloqueadas por paywall, receber assinaturas de fãs simulados e converter leads no chat — como se fosse uma conta real do Privacy!
-                </p>
-                <div className="glass-card" style={{ padding: 16, background: "rgba(236,72,153,0.02)", borderColor: "rgba(236,72,153,0.2)", textAlign: "left", marginBottom: 20 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: 10 }}>
-                    <span style={{ fontSize: "0.85rem", color: "#f472b6", fontWeight: 700 }}>Acesso Vitalício ao Simulador Privacy</span>
-                    <span style={{ fontSize: "0.9rem", textDecoration: "line-through", color: "#64748b" }}>R$ 79,90</span>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                    <span style={{ fontSize: "0.85rem", color: "#34d399", fontWeight: 700 }}>Desconto de Cliente HotModel:</span>
-                    <span style={{ fontSize: "1.3rem", color: "#34d399", fontWeight: 900 }}>R$ 49,90 (50% OFF)</span>
-                  </div>
-                  <div style={{ fontSize: "0.75rem", color: "#94a3b8" }}>* Oferta válida apenas nesta página. Ao recusar, o preço volta a R$ 79,90.</div>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  <button className="btn btn-primary" style={{ width: "100%", background: "linear-gradient(135deg,#ec4899,#d946ef)", border: "none", padding: 14, fontWeight: 700 }} onClick={() => {
-                    setUpsell2Active(true);
-                    setSuccessTotal(p => p + 49.90);
-                    const txs = JSON.parse(localStorage.getItem("hotmodel_transactions") || "[]");
-                    if (txs.length) { txs[0].amount += 49.90; txs[0].modelName += " + Privacy VIP"; localStorage.setItem("hotmodel_transactions", JSON.stringify(txs)); refreshData(); }
-                    setCheckoutStep(4);
-                  }}>
-                    🚀 Sim! Adicionar Painel Privacy VIP por R$ 49,90
-                  </button>
-                  <button className="btn btn-secondary" style={{ width: "100%", padding: "10px", fontSize: "0.85rem" }} onClick={() => setCheckoutStep(4)}>
-                    Não tenho interesse, levar para os meus downloads ➔
-                  </button>
-                </div>
-              </div>
-            )}
-
             {/* STEP 4 — Success + PDF */}
             {checkoutStep === 4 && (
               <div style={{ textAlign: "center", padding: "20px 10px" }}>
@@ -778,10 +783,10 @@ export default function App() {
                     <span style={{ fontSize: "2.5rem" }}>📚</span>
                     <div>
                       <h5 style={{ fontSize: "1.05rem", fontWeight: 800, color: "#f472b6", margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-                        Virtual Creator Archive™ — Manual de Monetização & Acesso Completo
+                        Manual Completo — Do Acervo à Primeira Venda
                       </h5>
                       <p style={{ color: "var(--text-muted)", fontSize: "0.82rem", margin: "0 0 14px", lineHeight: 1.5 }}>
-                        <strong>ATENÇÃO:</strong> Seus links de acesso às mídias adquiridas estão dentro do manual abaixo. Clique para gerar o PDF oficial com os links, o cupom de 50% e o tutorial completo de monetização com IA.
+                        Seus links de acesso estão aqui dentro. O manual também tem o passo a passo para fazer a primeira venda ainda hoje, o cupom <strong>tel050</strong> (50% OFF no Privacy Painel Pro) e o guia de como usar as imagens com IA.
                       </p>
                       <button
                         onClick={() => generatePDF(models.filter(m => successModelNames.includes(m.name)))}
@@ -845,6 +850,21 @@ export default function App() {
             Modelos exclusivas e validadas prontas para implantação rápida. Ao comprar, você adquire a licença de uso exclusiva do acervo completo — e a modelo é <strong>imediatamente retirada da vitrine</strong> para sempre.
           </p>
         </section>
+
+        {/* Banner — 2ª modelo 50% OFF */}
+        <div style={{ maxWidth: 860, margin: "0 auto 28px", background: "linear-gradient(135deg, rgba(236,72,153,0.12), rgba(217,70,239,0.08))", border: "1px solid rgba(236,72,153,0.35)", borderRadius: 14, padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <span style={{ fontSize: "2rem" }}>🔥</span>
+            <div>
+              <p style={{ margin: 0, fontWeight: 800, fontSize: "1rem", color: "#f9a8d4" }}>A 2ª modelo sai pela metade do preço</p>
+              <p style={{ margin: "2px 0 0", fontSize: "0.82rem", color: "#94a3b8" }}>Adicione uma segunda modelo no carrinho e pague 50% menos. Ofertas exclusivas · disponibilidade limitada.</p>
+            </div>
+          </div>
+          <div style={{ background: "rgba(236,72,153,0.15)", border: "1px dashed rgba(236,72,153,0.5)", borderRadius: 8, padding: "8px 16px", textAlign: "center", whiteSpace: "nowrap" }}>
+            <p style={{ margin: 0, fontSize: "0.75rem", color: "#94a3b8", fontWeight: 600, textTransform: "uppercase", letterSpacing: 1 }}>Desconto automático</p>
+            <p style={{ margin: 0, fontSize: "1.4rem", fontWeight: 900, color: "#ec4899" }}>50% OFF</p>
+          </div>
+        </div>
 
         <div style={{ maxWidth: 560, margin: "0 auto 24px", position: "relative" }}>
           <Search size={18} style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: "#64748b" }} />
