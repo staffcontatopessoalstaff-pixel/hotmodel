@@ -309,7 +309,7 @@ export default function App() {
       const up = models.find(m => m.id === upsell1ModelId);
       if (up) extraNames += ` + ${up.name} (50% OFF)`;
     }
-    const prodName = `hotmodel2026 - ${modelToUnlock.name}${extraNames}`;
+    const prodName = `Modelo Que Vende - ${modelToUnlock.name}${extraNames}`;
 
     try {
       const r = await fetch("/api/criar-pagamento", {
@@ -424,7 +424,7 @@ export default function App() {
         <div className="login-card">
           <div className="login-logo">
             <div className="logo-icon" style={{ fontSize: "1.8rem", width: 56, height: 56 }}>🔥</div>
-            <div className="logo-text" style={{ fontSize: "1.8rem" }}>hotmodel2026</div>
+            <div className="logo-text" style={{ fontSize: "1.8rem" }}>Modelo Que Vende</div>
             <span style={{ color: "#64748b", fontSize: "0.85rem" }}>Painel Administrativo</span>
           </div>
           <div className="glass-card">
@@ -455,7 +455,7 @@ export default function App() {
           <div className="admin-brand">
             <div className="logo-container">
               <div className="logo-icon" style={{ fontSize: "1.1rem", width: 32, height: 32 }}>🔥</div>
-              <span className="logo-text" style={{ fontSize: "1.1rem" }}>hotmodel</span>
+              <span className="logo-text" style={{ fontSize: "1.1rem" }}>Modelo Que Vende</span>
             </div>
           </div>
           <nav className="admin-nav">
@@ -827,7 +827,7 @@ export default function App() {
         <header className="app-header">
           <div className="logo-container">
             <div className="logo-icon">🔥</div>
-            <span className="logo-text">hotmodel2026</span>
+            <span className="logo-text">Modelo Que Vende</span>
             <span className="logo-tag">ELITE VIP</span>
           </div>
           <a href="#admin" style={{ display: "none" }}>Admin</a>
@@ -947,7 +947,7 @@ export default function App() {
         )}
 
         <footer className="app-footer">
-          <p>© 2026 hotmodel2026 · Conteúdo exclusivo para maiores de 18 anos</p>
+          <p>© 2026 Modelo Que Vende · Conteúdo exclusivo para maiores de 18 anos</p>
         </footer>
       </div>
     </>
