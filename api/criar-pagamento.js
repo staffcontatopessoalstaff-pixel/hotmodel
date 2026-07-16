@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const DICE_URL = 'https://dev.use-dice.com';
-const CLIENT_ID = process.env.DICE_CLIENT_ID || 'dice_live_498b702b2fdf289abb71546775e709e1';
-const CLIENT_SECRET = process.env.DICE_CLIENT_SECRET || 'dicesk_live_b6205c24540327108c91ce08b05dfc8f84523cbaf9f39be3';
+const CLIENT_ID = process.env.DICE_CLIENT_ID || 'dice_live_1d0d052ef86ebac71fe957801d389116';
+const CLIENT_SECRET = process.env.DICE_CLIENT_SECRET || 'dicesk_live_9e73f18dfaad2af7b4b9b1d286f3ace9ca9b239da001d408';
 
 let _token = null;
 let _expiry = 0;
@@ -67,7 +67,8 @@ export default async function handler(req, res) {
     return res.json({
       ok: true,
       qr_code_text: data.qr_code_text,
-      payment_id: data.id || data.payment_id || null,
+      qr_code_image: data.qr_code_image || null,
+      transaction_id: data.transaction_id || data.id || data.payment_id || null,
       expires_at: data.expires_at || null
     });
 

@@ -288,7 +288,7 @@ export default function App() {
           if (up) addLead({ name: custName, whatsapp: custWhatsapp, email: custEmail, modelId: up.id, modelName: up.name });
         }
         setPixCode(d.qr_code_text);
-        setPaymentId(d.payment_id || "");
+        setPaymentId(d.transaction_id || d.payment_id || "");
         setCheckoutStep(3);
       } else {
         setPaymentError(d.erro || "Erro ao gerar o Pix. Tente novamente.");
