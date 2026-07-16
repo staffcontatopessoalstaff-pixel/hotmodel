@@ -733,11 +733,6 @@ export default function App() {
                     {paymentLoading ? "Gerando Pix..." : "Confirmar e Ir para Pagamento"}
                   </button>
                 </div>
-                <div style={{ marginTop: 16, borderTop: "1px dashed rgba(255,255,255,0.1)", paddingTop: 12, textAlign: "center" }}>
-                  <button type="button" className="btn" style={{ background: "rgba(255,255,255,0.03)", color: "#64748b", fontSize: "0.78rem", border: "1px dashed rgba(255,255,255,0.1)" }} onClick={confirmPayment}>
-                    ⚙️ Testar sem API (simular aprovação)
-                  </button>
-                </div>
               </form>
             )}
 
@@ -760,11 +755,6 @@ export default function App() {
                       <Copy size={12} /> {isCopied ? "Copiado!" : "Copiar"}
                     </button>
                   </div>
-                </div>
-                <div style={{ marginTop: 16, borderTop: "1px dashed rgba(255,255,255,0.08)", paddingTop: 12 }}>
-                  <button type="button" onClick={confirmPayment} style={{ background: "none", border: "none", color: "#64748b", fontSize: "0.75rem", textDecoration: "underline", cursor: "pointer" }}>
-                    ⚙️ Simular Aprovação do Pix (Apenas para Teste)
-                  </button>
                 </div>
               </div>
             )}
